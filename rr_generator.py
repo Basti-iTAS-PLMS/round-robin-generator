@@ -48,10 +48,12 @@ def html_table_header(round: int) -> str:
 def html_table_body(round: int, pairings: list[list[tuple[int, int]]], league) -> str:
     pairings_table: str  = ""
     for idx, pairing in enumerate(pairings[round]):
+        white_participant = league.participants[pairing[0]]
+        black_participant = league.participants[pairing[1]]
         pairings_table += f"<tr>\n\t<th>{idx + 1}.</th>\n"
-        pairings_table += f"<td>&#x2654;{league.participants[pairing[0]]}</td>\n"
-        pairings_table += f"<th><a href=''> N/A </a></th>"
-        pairings_table += f"<td>&#x265A;{league.participants[pairing[1]]}</td>\n"
+        pairings_table += f"<td><a href={white_participant.lichess_link}>&#x2654;{white_participant.name}</a></td>\n"
+        pairings_table += f"<th> N/A </th>"
+        pairings_table += f"<td><a href={white_participant.lichess_link}>&#x265A;{black_participant.name}</a></td>\n"
         pairings_table += f"</tr>\n"
 
     pairings_table += "</table>\n"
@@ -82,6 +84,8 @@ def main(filepath_: str):
         if (num_of_missing_pairings < len(leagues)):
             with open(f"./round{round_ + 1}.html", "w", encoding="utf-8") as f:
                 f.write(html_table)
+        else:
+            break
 
         round_ += 1
 
