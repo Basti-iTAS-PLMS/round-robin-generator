@@ -37,8 +37,8 @@ def round_robin(num_participants: int) -> list[list[tuple[int, int]]]:
 
     return pairings
 
-def html_table_header(round: int) -> str:
-    header = f"<h3>Pairings - Round {round} (<from> - <to>)</h3>\n"
+def html_table_header(league: str, round: int) -> str:
+    header: str = f"<h3>Pairings - {league} - Round {round} (<from> - <to>)</h3>\n"
     header += f"<table style=\"...\">\n"
     header += f"<tr>\n<th>No.</th>\n<th>White Player</th>\n<th>Result</th>\n"
     header += f"<th>Black Player</th>\n</tr>\n<tr>"
