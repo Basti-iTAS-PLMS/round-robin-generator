@@ -63,31 +63,41 @@ def main(filepath_: str):
     leagues = extract_leagues(filepath_)
     pairings_per_league: list[list[list[tuple[int, int]]]] = []
     pairings: list[list[tuple[int, int]]] = []
+
+    # TODO(Basti): below are two variants for thml files. Either remove one or add possibility to choose between them!
     for league in leagues:
         # print(f"{league.name} ({len(league.participants)} players)\n")
         pairings = round_robin(len(league.participants))
-        # print(f"{np.array(pairings) + 1}")
-        pairings_per_league.append(pairings)
-
-    round_ = 0
-    while (True):
-        num_of_missing_pairings: int = 0
         html_table: str = ""
-        for pairing, league in zip(pairings_per_league, leagues):
-            if len(pairing) <= round_:
-                num_of_missing_pairings += 1
-                continue
+        for idx, round_ in enumerate(pairings):
+            html_table += html_table_header(league.name, idx + 1)
+            html_table += html_table_body(idx, pairings, league)
 
-            html_table += html_table_header(round_ + 1)
-            html_table += html_table_body(round_, pairing, league)
-
-        if (num_of_missing_pairings < len(leagues)):
-            with open(f"./round{round_ + 1}.html", "w", encoding="utf-8") as f:
+        with open(f"{league.name}.html", "w", encoding="utf-8") as f:
                 f.write(html_table)
-        else:
-            break
 
-        round_ += 1
+    #     # print(f"{np.array(pairings) + 1}")
+    #     pairings_per_league.append(pairings)
+    #
+    # round_ = 0
+    # while (True):
+    #     num_of_missing_pairings: int = 0
+    #     html_table: str = ""
+    #     for pairing, league in zip(pairings_per_league, leagues):
+    #         if len(pairing) <= round_:
+    #             num_of_missing_pairings += 1
+    #             continue
+    #
+    #         html_table += html_table_header(league.name, round_ + 1)
+    #         html_table += html_table_body(round_, pairing, league)
+    #
+    #     if (num_of_missing_pairings < len(leagues)):
+    #         with open(f"./round{round_ + 1}.html", "w", encoding="utf-8") as f:
+    #             f.write(html_table)
+    #     else:
+    #         break
+    #
+    #     round_ += 1
 
 if __name__ == "__main__":
     filepath = "./example.txt"
