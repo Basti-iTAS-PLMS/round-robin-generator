@@ -53,7 +53,7 @@ def html_table_body(round: int, pairings: list[list[tuple[int, int]]], league) -
         pairings_table += f"<tr>\n\t<th>{idx + 1}.</th>\n"
         pairings_table += f"<td><a href={white_participant.lichess_link}>&#x2654;{white_participant.name}</a></td>\n"
         pairings_table += f"<th> N/A </th>"
-        pairings_table += f"<td><a href={white_participant.lichess_link}>&#x265A;{black_participant.name}</a></td>\n"
+        pairings_table += f"<td><a href={black_participant.lichess_link}>&#x265A;{black_participant.name}</a></td>\n"
         pairings_table += f"</tr>\n"
 
     pairings_table += "</table>\n"
